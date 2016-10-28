@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/mvc
+       http://www.springframework.org/schema/mvc/spring-mvc.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <mvc:annotation-driven>
+        <mvc:argument-resolvers>
+            <bean class="org.springframework.data.web.PageableHandlerMethodArgumentResolver"/>
+        </mvc:argument-resolvers>
+    </mvc:annotation-driven>
+
+    <context:component-scan base-package="com.santex.controller com.santex.validator"/>
+
+    <mvc:resources mapping="/images/**" location="file:${catalina.home}/images/" cache-period="3600"/>
+    <mvc:resources mapping="/brandLogos/**" location="file:${catalina.home}/brandLogos/" cache-period="3600"/>
+
+    <mvc:default-servlet-handler/>
+
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="maxUploadSize" value="10485760"/>
+    </bean>
+
+    <bean id="viewPDFResolver" class="org.springframework.web.servlet.view.XmlViewResolver">
+        <property name="location" value="/WEB-INF/spring/santex-pdf-config.xml"/>
+        <property name="order" value="0"/>
+    </bean>
+
+    <bean id="viewExcelResolver" class="org.springframework.web.servlet.view.XmlViewResolver">
+        <property name="location" value="/WEB-INF/spring/santex-excel-config.xml"/>
+        <property name="order" value="1"/>
+    </bean>
+
+    <bean id="localeResolver"
+          class="org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver">
+        <property name="defaultLocale" value="uk"/>
+    </bean>
+
+    <bean id="viewResolver" class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+        <property name="viewClass" value="org.springframework.web.servlet.view.tiles3.TilesView"/>
+        <property name="contentType" value="text/html;charset=UTF-8"/>
+    </bean>
+
+    <bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
+        <property name="definitions" value="/WEB-INF/layouts/layouts.xml"/>
+    </bean>
+
+    <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean"/>
+
+</beans>

@@ -1,0 +1,27 @@
+<config xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+        xmlns='http://www.ehcache.org/v3'
+        xmlns:jsr107='http://www.ehcache.org/v3/jsr107'
+        xsi:schemaLocation="
+        http://www.ehcache.org/v3 http://www.ehcache.org/schema/ehcache-core-3.1.xsd
+        http://www.ehcache.org/v3/jsr107 http://www.ehcache.org/schema/ehcache-107-ext-3.1.xsd">
+
+    <service>
+        <jsr107:defaults enable-management="false" enable-statistics="false">
+            <jsr107:cache name="menu" template="jcache"/>
+        </jsr107:defaults>
+    </service>
+
+    <cache-template name="jcache">
+        <expiry>
+            <none/>
+        </expiry>
+        <resources>
+            <heap unit="entries">1</heap>
+            <offheap unit="MB">5</offheap>
+        </resources>
+    </cache-template>
+
+    <cache alias="menu">
+        <heap unit="entries">1</heap>
+    </cache>
+</config>

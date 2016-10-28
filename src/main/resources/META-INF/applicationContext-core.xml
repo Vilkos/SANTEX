@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+       xmlns:task="http://www.springframework.org/schema/task"
+       xmlns:cache="http://www.springframework.org/schema/cache"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
+
+    <context:component-scan base-package="com.santex">
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
+    <context:annotation-config/>
+
+    <jpa:repositories base-package="com.santex.dao" transaction-manager-ref="transactionManager" entity-manager-factory-ref="entityManagerFactory"/>
+
+    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="dataSource" ref="jndiDataSource"/>
+        <property name="packagesToScan" value="com.santex.entity"/>
+        <property name="jpaVendorAdapter">
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+                <property name="database" value="MYSQL"/>
+            </bean>
+        </property>
+        <property name="jpaProperties">
+            <props>
+                <prop key="hibernate.hbm2ddl.auto">update</prop>
+                <prop key="hibernate.dialect">org.hibernate.dialect.MySQL57InnoDBDialect</prop>
+                <prop key="current_session_context_class">thread</prop>
+                <prop key="javax.persistence.sharedCache.mode">ENABLE_SELECTIVE</prop>
+                <prop key="hibernate.show_sql">true</prop>
+                <!--utf encoding-->
+                <prop key="hibernate.connection.useUnicode">true</prop>
+                <prop key="hibernate.connection.characterEncoding">UTF-8</prop>
+                <prop key="hibernate.connection.charSet">UTF-8</prop>
+                <!--ehcache-->
+                <prop key="hibernate.cache.use_second_level_cache">true</prop>
+                <prop key="hibernate.cache.use_query_cache">true</prop>
+                <prop key="hibernate.javax.cache.provider">org.ehcache.jsr107.EhcacheCachingProvider</prop>
+                <prop key="hibernate.cache.region.factory_class">org.hibernate.cache.jcache.JCacheRegionFactory</prop>
+                <prop key="hibernate.javax.cache.uri">classpath:META-INF/ehcache3.xml</prop>
+                <!--<prop key="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.EhCacheRegionFactory</prop>
+                <prop key="net.sf.ehcache.configurationResourceName">classpath:META-INF/ehcache.xml</prop>-->
+            </props>
+        </property>
+    </bean>
+
+    <!--transactions-->
+    <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true"/>
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+
+    <!--datasource-->
+    <!--<bean id="tomcatDataSource" class="org.apache.tomcat.jdbc.pool.DataSource" destroy-method="close">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver" />
+        <property name="url" value="jdbc:mysql://localhost:3306/santex_db" />
+        <property name="username" value="santex" />
+        <property name="password" value="Santex_db_1974" />
+        <property name="initialSize" value="5" />
+        <property name="maxActive" value="20" />
+        <property name="maxIdle" value="5" />
+        <property name="minIdle" value="2" />
+        <property name="connectionProperties" value="useUnicode=yes;characterEncoding=utf8;useSSL=false;" />
+        <property name="jdbcInterceptors" value="org.apache.tomcat.jdbc.pool.interceptor.ConnectionState;org.apache.tomcat.jdbc.pool.interceptor.StatementFinalizer" />
+        <property name="jmxEnabled" value="true" />
+        <property name="minEvictableIdleTimeMillis" value="60000" />
+        <property name="removeAbandonedTimeout" value="1000" />
+        <property name="removeAbandoned" value="true"/>
+        <property name="logAbandoned" value="true" />
+        <property name="testWhileIdle" value="true" />
+        <property name="testOnBorrow" value="true" />
+        <property name="testOnReturn" value="false" />
+        <property name="validationQuery" value="SELECT 1" />
+        <property name="validationInterval" value="30000" />
+        <property name="timeBetweenEvictionRunsMillis" value="30000" />
+    </bean>-->
+
+    <bean id="jndiDataSource" class="org.springframework.jndi.JndiObjectFactoryBean" lazy-init="true">
+        <property name="jndiName" value="java:comp/env/jdbc/santex_db"/>
+    </bean>
+    <!--<bean name="dataSource" class="org.springframework.jdbc.datasource.LazyConnectionDataSourceProxy">
+        <property name="targetDataSource" ref="jndiDataSource" />
+    </bean>-->
+    <!--<bean class="org.springframework.jdbc.core.JdbcTemplate">
+        <constructor-arg ref="dataSource" />
+    </bean>-->
+
+    <!--cache-->
+    <cache:annotation-driven/>
+    <bean id="cacheManager" class="org.springframework.cache.jcache.JCacheCacheManager">
+        <property name="cacheManager" ref="jCacheManager"/>
+    </bean>
+    <bean id="jCacheManager" class="org.springframework.cache.jcache.JCacheManagerFactoryBean">
+        <property name="cacheManagerUri" value="classpath:META-INF/jcache.xml"/>
+    </bean>
+
+    <!--email-->
+    <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+        <property name="host" value="smtp.gmail.com"/>
+        <property name="port" value="587"/>
+        <property name="username" value="vilkos.eshop@gmail.com"/>
+        <property name="password" value="santexproject"/>
+
+        <property name="javaMailProperties">
+            <props>
+                <prop key="mail.transport.protocol">smtp</prop>
+                <prop key="mail.smtp.auth">true</prop>
+                <prop key="mail.smtp.starttls.enable">true</prop>
+                <prop key="mail.debug">true</prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean id="emailService" class="com.santex.service.implementation.EmailServiceImpl">
+        <property name="mailSender" ref="mailSender"/>
+        <property name="velocityEngine" ref="velocityEngine"/>
+    </bean>
+
+    <bean id="velocityEngine" class="org.springframework.ui.velocity.VelocityEngineFactoryBean">
+        <property name="velocityProperties">
+            <value>
+                resource.loader=class
+                class.resource.loader.class=org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+            </value>
+        </property>
+    </bean>
+
+    <!--thread pools-->
+    <task:annotation-driven executor="taskExecutor" scheduler="taskScheduler" />
+    <task:executor id="taskExecutor" pool-size="5" queue-capacity="10"/>
+    <task:scheduler id="taskScheduler" pool-size="2"/>
+</beans>

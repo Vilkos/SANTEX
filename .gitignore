@@ -1,0 +1,11 @@
+.idea/*
+.gitignore
+### Java template
+*.class
+
+# Package Files #
+*.jar
+*.war
+*.ear
+
+

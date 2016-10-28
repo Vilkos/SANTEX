@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<b:beans xmlns="http://www.springframework.org/schema/security"
+         xmlns:b="http://www.springframework.org/schema/beans"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://www.springframework.org/schema/beans
+         http://www.springframework.org/schema/beans/spring-beans.xsd
+         http://www.springframework.org/schema/security
+         http://www.springframework.org/schema/security/spring-security.xsd">
+
+    <http use-expressions="true">
+        <intercept-url pattern="/" access="permitAll"/>
+        <intercept-url pattern="/home" access="permitAll"/>
+        <intercept-url pattern="/customer/**" access="hasRole('ROLE_USER')"/>
+        <intercept-url pattern="/admin/**" access="hasRole('ROLE_ADMIN')"/>
+        <csrf disabled="true"/>
+        <form-login login-page="/login"
+                    username-parameter="email"
+                    password-parameter="password"
+                    authentication-failure-url="/login?error=true"
+                    default-target-url="/welcome"/>
+        <logout logout-url="/logout"
+                logout-success-url="/"
+                delete-cookies="JSESSIONID"/>
+        <remember-me key="uniqueAndSecret" user-service-ref="userDetailsService"/>
+        <headers>
+            <frame-options policy="SAMEORIGIN" />
+            <hsts disabled="true"/>
+        </headers>
+    </http>
+
+    <authentication-manager>
+        <authentication-provider>
+            <user-service>
+                <user name="ad" password="pass" authorities="ROLE_ADMIN"/>
+            </user-service>
+        </authentication-provider>
+
+        <authentication-provider user-service-ref="userDetailsService">
+            <password-encoder ref="encoder"/>
+        </authentication-provider>
+    </authentication-manager>
+
+    <b:bean id="encoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
+        <b:constructor-arg name="strength" value="11"/>
+    </b:bean>
+</b:beans>

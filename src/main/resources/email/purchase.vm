@@ -1,0 +1,160 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html lang="uk">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="format-detection" content="telephone=no">
+    <title>Single Column</title>
+    <style type="text/css">
+        body {
+            margin: 0;
+            padding: 0;
+            -ms-text-size-adjust: 100%;
+            -webkit-text-size-adjust: 100%;
+        }
+
+        table {
+            border-spacing: 0;
+        }
+
+        table td {
+            border-collapse: collapse;
+        }
+
+        .ExternalClass {
+            width: 100%;
+        }
+
+        .ExternalClass,
+        .ExternalClass p,
+        .ExternalClass span,
+        .ExternalClass font,
+        .ExternalClass td,
+        .ExternalClass div {
+            line-height: 100%;
+        }
+
+        .ReadMsgBody {
+            width: 100%;
+            background-color: #ebebeb;
+        }
+
+        table {
+            mso-table-lspace: 0pt;
+            mso-table-rspace: 0pt;
+        }
+
+        img {
+            -ms-interpolation-mode: bicubic;
+        }
+
+        .yshortcuts a {
+            border-bottom: none !important;
+        }
+
+        @media screen and (max-width: 599px) {
+            .force-row,
+            .container {
+                width: 100% !important;
+                max-width: 100% !important;
+            }
+        }
+
+        @media screen and (max-width: 400px) {
+            .container-padding {
+                padding-left: 12px !important;
+                padding-right: 12px !important;
+            }
+        }
+
+        .ios-footer a {
+            color: #aaaaaa !important;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body style="margin:0; padding:0;" bgcolor="#F0F0F0" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+
+<!-- 100% background wrapper (grey background) -->
+<table border="0" width="100%" height="100%" cellpadding="0" cellspacing="0" bgcolor="#F0F0F0">
+    <tr>
+        <td align="center" valign="top" bgcolor="#F0F0F0" style="background-color: #F0F0F0;">
+
+            <br>
+
+            <!-- 600px container (white background) -->
+            <table border="0" width="600" cellpadding="0" cellspacing="0" class="container"
+                   style="width:600px;max-width:600px">
+                <tr>
+                    <td class="container-padding header" align="left"
+                        style="font-family:Helvetica, Arial, sans-serif;font-size:24px;font-weight:bold;padding-bottom:12px;color:#DF4726;padding-left:24px;padding-right:24px">
+                        Дякуємо за Ваше замовлення.
+                    </td>
+                </tr>
+                <tr>
+                    <td class="container-padding content" align="left"
+                        style="padding-left:24px;padding-right:24px;padding-top:12px;padding-bottom:12px;background-color:#ffffff" colspan="2">
+                        <br>
+
+                        <div class="title"
+                             style="font-family:Helvetica, Arial, sans-serif;font-size:18px;font-weight:600;color:#374550">Замовлення № ${id}</div>
+                        <br>
+
+                        <div class="body-text"
+                             style="font-family:Helvetica, Arial, sans-serif;font-size:12px;line-height:20px;text-align:left;color:#333333">
+                            <table style="width: 100%">
+                                <thead>
+                                <tr>
+                                    <th>Найменування</th>
+                                    <th align="center">Кількість</th>
+                                    <th align="center">Ціна</th>
+                                </tr>
+                                </thead>
+                                <tfoot>
+                                <td><strong>Разом:</strong></td>
+                                <td colspan="1">&nbsp;</td>
+                                <td align="right"><strong>$number.format("cur", $total, $locale)</strong></td>
+                                </tfoot>
+                                <tbody>
+                                    #foreach($entry in $entryList)
+                                    <tr>
+                                        <td>$entry.productName</td>
+                                        <td align="center">$entry.quantity</td>
+                                        <td align="right">$number.format("cur", $entry.subtotal, $locale)</td>
+                                    </tr>
+                                    #end
+                                </tbody>
+                            </table>
+                            <br><br>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="container-padding footer-text" align="left"
+                        style="font-family:Helvetica, Arial, sans-serif;font-size:12px;line-height:16px;color:#aaaaaa;padding-left:24px;padding-right:24px">
+                        <br><br>
+                        <strong>${cc.name}</strong><br>
+            <span class="ios-footer">
+              ${cc.address.street}, ${cc.address.number}<br>
+                ${cc.address.city}, ${cc.address.postcode}<br>
+                ${cc.phone1}, ${cc.phone2}, ${cc.phone3}
+            </span>
+                        <br>
+                        <br><br>
+                    </td>
+                    <td class="container-padding footer-text" align="right"
+                        style="font-family:Helvetica, Arial, sans-serif;font-size:12px;line-height:16px;color:#aaaaaa;padding-left:24px;padding-right:24px">
+                        <br><br>
+                        Eugen&nbsp;Zubenko:&nbsp;©&nbsp;2016.
+                    </td>
+                </tr>
+            </table>
+            <!--/600px container -->
+        </td>
+    </tr>
+</table>
+<!--/100% background wrapper-->
+</body>
+</html>
