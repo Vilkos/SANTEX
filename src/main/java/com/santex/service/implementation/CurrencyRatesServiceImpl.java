@@ -85,9 +85,7 @@ public class CurrencyRatesServiceImpl implements CurrencyRatesService {
             return 100;
         } else {
             Optional<CurrencyRate> rate = currencyRatesDao.findByCurrency(currency);
-            if (rate.isPresent()) {
-                return rate.get().getRate();
-            } else return 100;
+            return rate.map(CurrencyRate::getRate).orElse(100);
         }
     }
 

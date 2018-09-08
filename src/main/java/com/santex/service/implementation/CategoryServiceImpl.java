@@ -1,9 +1,9 @@
 package com.santex.service.implementation;
 
-import com.santex.dto.SearchCriteriaAdminProduct;
 import com.santex.dao.CategoryDao;
-import com.santex.entity.Category;
 import com.santex.dto.Event;
+import com.santex.dto.SearchCriteriaAdminProduct;
+import com.santex.entity.Category;
 import com.santex.entity.Subcategory;
 import com.santex.service.CategoryService;
 import org.springframework.cache.annotation.CacheEvict;
@@ -13,9 +13,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collections;
 import java.util.List;
-import java.util.ListIterator;
 
 @Service
 @Repository
@@ -75,17 +73,12 @@ public class CategoryServiceImpl implements CategoryService {
         List<Category> categories = findAll();
         for (Category category : categories) {
             List<Subcategory> subcategories = category.getSubcategoryList();
-            Collections.sort(subcategories, (o1, o2) -> {
+            subcategories.sort((o1, o2) -> {
                 if (o1.getSubcategoryName().equals("Інше")) return 1;
                 if (o2.getSubcategoryName().equals("Інше")) return -1;
                 else return o1.getSubcategoryName().compareTo(o2.getSubcategoryName());
             });
-            ListIterator<Subcategory> iter = category.getSubcategoryList().listIterator();
-            while (iter.hasNext()) {
-                if (iter.next().getSubcategoryName().equals(category.getCategoryName())) {
-                    iter.remove();
-                }
-            }
+            category.getSubcategoryList().removeIf(subcategory -> subcategory.getSubcategoryName().equals(category.getCategoryName()));
         }
         return categories;
     }

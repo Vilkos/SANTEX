@@ -59,7 +59,6 @@ public class ProductImageServiceImpl implements ProductImageService {
                 encode(outputImage, out);
 
                 out.flush();
-                out.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -94,13 +93,11 @@ public class ProductImageServiceImpl implements ProductImageService {
                 if (productDao.findBySKU(productSKU).isPresent()) {
                     try (InputStream in = Files.newInputStream(file)) {
                         add(in, productSKU);
-                        in.close();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
                 }
             }
-            stream.close();
         } catch (IOException e) {
             e.printStackTrace();
         }

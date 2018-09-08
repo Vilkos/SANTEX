@@ -69,7 +69,7 @@ public class DbCreationServiceImpl implements DbCreationService {
             String subcategoryName = product.getSubcategory().getSubcategoryName();
             List<Subcategory> subcategories = subcategoryDao.findByCategoryId(category.getId());
             Subcategory subcategory = subcategoryDao.getByCatIdAndSubName(category.getId(), subcategoryName);
-            if (!subcategories.stream().filter(sub -> sub.getSubcategoryName().equals(subcategoryName)).findFirst().isPresent() || subcategories.isEmpty()) {
+            if (subcategories.stream().noneMatch(sub -> sub.getSubcategoryName().equals(subcategoryName)) || subcategories.isEmpty()) {
                 Subcategory s = new Subcategory(subcategoryName);
                 s.setCategory(category);
                 subcategory = subcategoryDao.save(s);

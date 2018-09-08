@@ -17,7 +17,7 @@ public class CurrencyConverter {
     static double currencyConverter(int price, Currency currency) {
         int temp = price * rate.obtainRateFromDb(currency);
         if (temp < 10000) return ((double) temp) / 10000;                                      // Less than 1 UAH.
-        if (temp >= 10000 && temp <= 100000) return roundToZeroFive((double) temp) / 10000;    // Between 1 UAH and 10 UAH.
+        if (temp <= 100000) return roundToZeroFive((double) temp) / 10000;                     // Between 1 UAH and 10 UAH.
         else return roundToZero((double) temp) / 10000;                                        // Greater than 10 UAH.
     }
 

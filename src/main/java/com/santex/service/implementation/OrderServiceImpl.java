@@ -59,7 +59,7 @@ public class OrderServiceImpl implements OrderService {
 
         for (OrderEntry entry : entriesFromDb) {
             int id = entry.obtainOrderId();
-            if (!entriesFromForm.stream().filter(e -> e.getOrderId() == id).findFirst().isPresent()) {
+            if (entriesFromForm.stream().noneMatch(e -> e.getOrderId() == id)) {
                 orderEntryDao.delete(entry);
             }
         }

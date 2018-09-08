@@ -105,7 +105,6 @@ public class BrandServiceImpl implements BrandService {
             try (OutputStream out = new BufferedOutputStream(Files.newOutputStream(logoFile, CREATE, TRUNCATE_EXISTING))) {
                 out.write(logo.getBytes(), 0, logo.getBytes().length);
                 out.flush();
-                out.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }

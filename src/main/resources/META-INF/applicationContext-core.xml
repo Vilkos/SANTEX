@@ -20,13 +20,13 @@
         <property name="packagesToScan" value="com.santex.entity"/>
         <property name="jpaVendorAdapter">
             <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
-                <property name="database" value="MYSQL"/>
+                <property name="database" value="POSTGRESQL"/>
             </bean>
         </property>
         <property name="jpaProperties">
             <props>
                 <prop key="hibernate.hbm2ddl.auto">update</prop>
-                <prop key="hibernate.dialect">org.hibernate.dialect.MySQL57InnoDBDialect</prop>
+                <prop key="hibernate.dialect">org.hibernate.dialect.PostgreSQL9Dialect</prop>
                 <prop key="current_session_context_class">thread</prop>
                 <prop key="javax.persistence.sharedCache.mode">ENABLE_SELECTIVE</prop>
                 <prop key="hibernate.show_sql">true</prop>
@@ -47,7 +47,7 @@
     </bean>
 
     <!--transactions-->
-    <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true"/>
+    <tx:annotation-driven proxy-target-class="true"/>
     <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
         <property name="entityManagerFactory" ref="entityManagerFactory"/>
     </bean>
