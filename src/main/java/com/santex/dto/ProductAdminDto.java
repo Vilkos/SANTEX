@@ -4,11 +4,11 @@ import com.santex.entity.Brand;
 import com.santex.entity.Currency;
 import com.santex.entity.Subcategory;
 import com.santex.entity.Unit;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.web.multipart.MultipartFile;
-
-import javax.validation.Valid;
-import javax.validation.constraints.*;
 
 public class ProductAdminDto {
     private int id;

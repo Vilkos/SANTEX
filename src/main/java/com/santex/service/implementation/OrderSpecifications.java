@@ -7,7 +7,7 @@ import com.santex.entity.Order_;
 import org.springframework.data.jpa.domain.Specification;
 import com.santex.entity.Order;
 
-import javax.persistence.criteria.*;
+import jakarta.persistence.criteria.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;

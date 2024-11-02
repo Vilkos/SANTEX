@@ -1,6 +1,6 @@
 package com.santex.entity;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @Embeddable
 public class Address {

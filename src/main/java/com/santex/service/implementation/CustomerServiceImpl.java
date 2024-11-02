@@ -48,37 +48,42 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public void edit(CustomerCreateFormDto form) {
-        Customer customer = customerDao.findOne(form.getId());
-        customer.setEmail(form.getEmail());
-        customer.setPassword(new BCryptPasswordEncoder().encode(form.getPassword()));
-        customer.setFirstName(form.getFirstName());
-        customer.setSecondName(form.getSecondName());
-        customer.setPhone(form.getPhone());
-        customerDao.save(customer);
+        Optional<Customer> customer = customerDao.findById(form.getId());
+        if (customer.isPresent()) {
+            customer.get().setEmail(form.getEmail());
+            customer.get().setPassword(new BCryptPasswordEncoder().encode(form.getPassword()));
+            customer.get().setFirstName(form.getFirstName());
+            customer.get().setSecondName(form.getSecondName());
+            customer.get().setPhone(form.getPhone());
+            customerDao.save(customer.get());
+        }
     }
 
     @Override
     public void remove(int id) {
-        customerDao.delete(id);
+        customerDao.deleteById(id);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Customer findById(int id) {
-        return customerDao.findOne(id);
+    public Optional<Customer> findById(int id) {
+        return customerDao.findById(id);
     }
 
     @Override
     @Transactional(readOnly = true)
     public CustomerCreateFormDto findFormById(int id) {
-        Customer customer = customerDao.findOne(id);
-        CustomerCreateFormDto uf = new CustomerCreateFormDto();
-        uf.setId(customer.getId());
-        uf.setEmail(customer.getEmail());
-        uf.setFirstName(customer.getFirstName());
-        uf.setSecondName(customer.getSecondName());
-        uf.setPhone(customer.getPhone());
-        return uf;
+        Optional<Customer> customer = customerDao.findById(id);
+        if (customer.isPresent()) {
+            CustomerCreateFormDto uf = new CustomerCreateFormDto();
+            uf.setId(customer.get().getId());
+            uf.setEmail(customer.get().getEmail());
+            uf.setFirstName(customer.get().getFirstName());
+            uf.setSecondName(customer.get().getSecondName());
+            uf.setPhone(customer.get().getPhone());
+            return uf;
+        }
+        return null;
     }
 
     @Override

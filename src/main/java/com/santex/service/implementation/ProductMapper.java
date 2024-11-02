@@ -12,10 +12,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static com.santex.service.PriceService.toStringEN;
-import static com.santex.service.PriceService.toStringWithLocale;
+import static com.santex.service.PriceService.*;
 import static com.santex.service.implementation.CurrencyConverter.currencyConverter;
-import static com.santex.service.PriceService.toDouble;
 
 final class ProductMapper {
     private static final Path path = Paths.get(System.getProperty("catalina.home"), "images");

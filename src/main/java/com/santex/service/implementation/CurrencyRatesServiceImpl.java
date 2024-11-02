@@ -14,10 +14,11 @@ import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.json.Json;
-import javax.json.JsonArray;
-import javax.json.JsonObject;
-import javax.json.JsonReader;
+import jakarta.json.Json;
+import jakarta.json.JsonArray;
+import jakarta.json.JsonObject;
+import jakarta.json.JsonReader;
+
 import javax.net.ssl.HttpsURLConnection;
 import java.io.IOException;
 import java.io.InputStream;

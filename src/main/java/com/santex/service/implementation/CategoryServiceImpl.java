@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Repository
@@ -37,23 +38,25 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     @CacheEvict(cacheNames = "menu", key = "'menu'")
     public void edit(int id, String categoryName) {
-        Category category = categoryDao.findOne(id);
-        category.setCategoryName(categoryName);
-        categoryDao.save(category);
-        publisher.publishEvent(new Event());
+        Optional<Category> category = categoryDao.findById(id);
+        if (category.isPresent()) {
+            category.get().setCategoryName(categoryName);
+            categoryDao.save(category.get());
+            publisher.publishEvent(new Event());
+        }
     }
 
     @Override
     @CacheEvict(cacheNames = "menu", key = "'menu'")
     public void remove(int id) {
-        categoryDao.delete(id);
+        categoryDao.deleteById(id);
         publisher.publishEvent(new Event());
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Category findById(int id) {
-        return categoryDao.findOne(id);
+    public Optional<Category> findById(int id) {
+        return categoryDao.findById(id);
     }
 
     @Override

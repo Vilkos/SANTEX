@@ -7,7 +7,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.data.repository.query.Param;
 
-import javax.persistence.QueryHint;
+import jakarta.persistence.QueryHint;
 import java.util.List;
 import java.util.Optional;
 

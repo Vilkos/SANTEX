@@ -4,7 +4,7 @@ import com.santex.entity.CompanyCredentials;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.QueryHints;
 
-import javax.persistence.QueryHint;
+import jakarta.persistence.QueryHint;
 import java.util.Optional;
 
 public interface CompanyCredentialsDao extends JpaRepository<CompanyCredentials, Integer> {

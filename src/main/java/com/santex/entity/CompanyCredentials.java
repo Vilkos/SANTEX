@@ -3,9 +3,9 @@ package com.santex.entity;
 import org.hibernate.annotations.*;
 import org.hibernate.annotations.Cache;
 
-import javax.persistence.*;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import java.io.Serializable;
 import java.net.InetAddress;
 import java.net.UnknownHostException;

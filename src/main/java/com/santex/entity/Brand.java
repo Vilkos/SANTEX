@@ -1,12 +1,12 @@
 package com.santex.entity;
 
+import jakarta.validation.constraints.Size;
 import org.hibernate.annotations.*;
 import org.hibernate.annotations.Cache;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.persistence.*;
-import javax.persistence.Entity;
-import javax.validation.constraints.Size;
+import jakarta.persistence.*;
+import jakarta.persistence.Entity;
 import java.io.Serializable;
 import java.util.List;
 

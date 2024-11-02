@@ -2,9 +2,9 @@ package com.santex.entity;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.*;
-import javax.persistence.Entity;
-import javax.validation.constraints.Size;
+import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.validation.constraints.Size;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;

@@ -5,7 +5,7 @@ import com.santex.entity.Customer;
 import com.santex.entity.Customer_;
 import org.springframework.data.jpa.domain.Specification;
 
-import javax.persistence.criteria.*;
+import jakarta.persistence.criteria.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;

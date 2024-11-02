@@ -12,6 +12,7 @@ import com.santex.service.EmailService;
 import com.santex.service.OrderEntryService;
 import com.santex.service.OrderService;
 import com.santex.service.implementation.CurrentCustomer;
+import jakarta.validation.Valid;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,8 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.xml.sax.SAXException;
 
-import javax.servlet.http.HttpServletResponse;
-import javax.validation.Valid;
+import jakarta.servlet.http.HttpServletResponse;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 import java.io.IOException;

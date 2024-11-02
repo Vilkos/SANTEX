@@ -1,12 +1,11 @@
 package com.santex.service.implementation;
 
-
 import com.santex.dto.SearchCriteria;
 import com.santex.dto.SearchCriteriaAdminProduct;
 import com.santex.entity.*;
 import org.springframework.data.jpa.domain.Specification;
 
-import javax.persistence.criteria.*;
+import jakarta.persistence.criteria.*;
 import java.util.ArrayList;
 import java.util.List;
 

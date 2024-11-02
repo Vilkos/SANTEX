@@ -4,13 +4,13 @@ import com.santex.entity.Category;
 import com.santex.entity.Subcategory;
 import com.santex.service.CategoryService;
 import com.santex.service.SubcategoryService;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.validation.Valid;
 import java.util.List;
 
 @Controller

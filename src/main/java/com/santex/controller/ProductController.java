@@ -12,8 +12,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import java.util.*;
 
 @Controller
@@ -70,7 +70,8 @@ public class ProductController {
         criteria.setSrt(srt.orElse(criteria.getSrt()));
 
         if (criteria.getCatId() > 0) {
-            criteria.setSectionName(categoryService.findById(criteria.getCatId()).getCategoryName());
+            Optional<Category> category = categoryService.findById(criteria.getCatId());
+            category.ifPresent(value -> criteria.setSectionName(value.getCategoryName()));
         }
 
         if (criteria.getSubId() > 0) {

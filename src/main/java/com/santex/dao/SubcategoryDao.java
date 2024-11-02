@@ -5,7 +5,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.*;
 import org.springframework.data.repository.query.Param;
 
-import javax.persistence.QueryHint;
+import jakarta.persistence.QueryHint;
 import java.util.List;
 
 public interface SubcategoryDao extends JpaRepository<Subcategory, Integer>, JpaSpecificationExecutor<Subcategory> {

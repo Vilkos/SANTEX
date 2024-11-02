@@ -41,24 +41,27 @@ public class SubcategoryServiceImpl implements SubcategoryService {
     @Override
     @CacheEvict(cacheNames = "menu", key = "'menu'")
     public void edit(int id, String subcategoryName, int category) {
-        Subcategory subcategory = subcategoryDao.findOne(id);
-        subcategory.setSubcategoryName(subcategoryName);
-        subcategory.setCategory(categoryDao.findOne(category));
-        subcategoryDao.save(subcategory);
-        publisher.publishEvent(new Event());
+        Optional<Subcategory> subcategory = subcategoryDao.findById(id);
+        Optional<Category> categoryFound = categoryDao.findById(category);
+        if (subcategory.isPresent() && categoryFound.isPresent()) {
+            subcategory.get().setSubcategoryName(subcategoryName);
+            subcategory.get().setCategory(categoryFound.get());
+            subcategoryDao.save(subcategory.get());
+            publisher.publishEvent(new Event());
+        }
     }
 
     @Override
     @CacheEvict(cacheNames = "menu", key = "'menu'")
     public void remove(int id) {
-        subcategoryDao.delete(id);
+        subcategoryDao.deleteById(id);
         publisher.publishEvent(new Event());
     }
 
     @Override
     @Transactional(readOnly = true)
     public Subcategory findById(int id) {
-        return subcategoryDao.findOne(id);
+        return subcategoryDao.findById(id).orElse(null);
     }
 
     @Override

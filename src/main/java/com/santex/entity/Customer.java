@@ -2,7 +2,7 @@ package com.santex.entity;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;

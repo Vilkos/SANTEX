@@ -65,7 +65,7 @@ public class CachePreheatServiceImpl implements CachePreheatService {
         int totalPages = 1;
         PageRequest request;
         for (int i = 0; i < totalPages; i++) {
-            request = new PageRequest(num - 1, 20);
+            request = PageRequest.of(num - 1, 20);
             Page<ProductCustomerDto> productCustomerDtos = productService.findByCriteriaCustomer(criteria, request);
             num = i + 1;
             totalPages = productCustomerDtos.getTotalPages();

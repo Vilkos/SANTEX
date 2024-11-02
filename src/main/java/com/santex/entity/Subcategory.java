@@ -1,12 +1,12 @@
 package com.santex.entity;
 
+import jakarta.validation.Valid;
 import org.hibernate.annotations.*;
 import org.hibernate.annotations.Cache;
 
-import javax.persistence.*;
-import javax.persistence.Entity;
-import javax.validation.Valid;
-import javax.validation.constraints.Size;
+import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.List;
 

@@ -20,9 +20,9 @@ import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 import org.xml.sax.SAXException;
 
-import javax.mail.util.ByteArrayDataSource;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.mail.util.ByteArrayDataSource;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 import java.io.*;

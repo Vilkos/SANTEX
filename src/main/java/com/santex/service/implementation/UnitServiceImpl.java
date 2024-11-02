@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Repository
@@ -31,24 +32,24 @@ public class UnitServiceImpl implements UnitService {
 
     @Override
     public void edit(int id, String unitName) {
-        Unit unit = unitDao.findOne(id);
-        if (unitName != null) {
-            unit.setUnitName(unitName);
-            unitDao.save(unit);
+        Optional<Unit> unit = unitDao.findById(id);
+        if (unit.isPresent() && unitName != null) {
+            unit.get().setUnitName(unitName);
+            unitDao.save(unit.get());
             publisher.publishEvent(new Event());
         }
     }
 
     @Override
     public void remove(int id) {
-        unitDao.delete(id);
+        unitDao.deleteById(id);
         publisher.publishEvent(new Event());
     }
 
     @Override
     @Transactional(readOnly = true)
     public Unit findById(int id) {
-        return unitDao.findOne(id);
+        return unitDao.findById(id).orElse(null);
     }
 
     @Override

@@ -16,6 +16,7 @@ import java.io.OutputStream;
 import java.nio.file.*;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static java.nio.file.StandardOpenOption.CREATE;
@@ -40,30 +41,36 @@ public class BrandServiceImpl implements BrandService {
 
     @Override
     public void edit(int id, String brandName, boolean logoAvailability, MultipartFile logo, String url) {
-        Brand brand = brandDao.findOne(id);
-        brand.setBrandName(brandName);
-        brand.setLogoAvailability(logoAvailability);
-        brand.setUrl(url);
-        brandDao.save(brand);
-        if (!logo.isEmpty()) {
-            addLogo(logo, id);
-        } else if (!logoAvailability) {
-            deleteLogo(id);
+        Optional<Brand> brand = brandDao.findById(id);
+        if (brand.isPresent()) {
+            brand.get().setBrandName(brandName);
+            brand.get().setLogoAvailability(logoAvailability);
+            brand.get().setUrl(url);
+            brandDao.save(brand.get());
+            if (!logo.isEmpty()) {
+                addLogo(logo, id);
+            } else if (!logoAvailability) {
+                deleteLogo(id);
+            }
         }
+
     }
 
     @Override
     public void remove(int id) {
         deleteLogo(id);
-        brandDao.delete(id);
+        brandDao.deleteById(id);
     }
 
     @Override
     @Transactional(readOnly = true)
     public Brand findById(int id) {
-        Brand brand = brandDao.findOne(id);
-        brand.setLogoAvailability(brandLogosChecker(brand.getId()));
-        return brand;
+        Optional<Brand> brand = brandDao.findById(id);
+        if (brand.isPresent()) {
+            brand.get().setLogoAvailability(brandLogosChecker(brand.get().getId()));
+            return brand.get();
+        }
+        return null;
     }
 
     @Override

@@ -4,6 +4,7 @@ import com.santex.dto.SearchCriteriaAdminProduct;
 import com.santex.entity.Category;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface CategoryService {
 
@@ -13,7 +14,7 @@ public interface CategoryService {
 
     void remove(int id);
 
-    Category findById(int id);
+    Optional<Category> findById(int id);
 
     List<Category> findAll();
 

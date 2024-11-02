@@ -70,7 +70,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void edit(int id, String SKU, boolean availability, boolean priceVisibility, int price, int discountPrice, Currency currency, String productName, MultipartFile image, boolean imageAvailability, int subcategory, int brand, int unit) {
-        Product product = productDao.findOne(id);
+        Product product = productDao.findById(id);
         product.setSKU(SKU);
         product.setAvailability(availability);
         product.setPrice(price);
@@ -78,9 +78,9 @@ public class ProductServiceImpl implements ProductService {
         product.setCurrency(currency);
         product.setProductName(productName);
         product.setPriceVisibility(priceVisibility);
-        product.setSubcategory(subcategoryDao.findOne(subcategory));
-        product.setBrand(brandDao.findOne(brand));
-        product.setUnit(unitDao.findOne(unit));
+        product.setSubcategory(subcategoryDao.findById(subcategory).orElse(null));
+        product.setBrand(brandDao.findById(brand).orElse(null));
+        product.setUnit(unitDao.findById(unit).orElse(null));
         productDao.save(product);
         publisher.publishEvent(new Event());
         if (!image.isEmpty()) {
@@ -92,9 +92,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product remove(int id) {
-        Product product = productDao.findOne(id);
+        Product product = productDao.findById(id);
         imageService.remove(product.getSKU());
-        productDao.delete(id);
+        productDao.deleteById(id);
         publisher.publishEvent(new Event());
         return product;
     }
@@ -102,7 +102,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     @Transactional(readOnly = true)
     public Product findById(int id) {
-        return productDao.findOne(id);
+        return productDao.findById(id);
     }
 
     @Override
@@ -120,7 +120,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     @Transactional(readOnly = true)
     public ProductAdminDto findByIdForAdmin(int id) {
-        return mapEntityIntoAdminDTO(productDao.findOne(id));
+        return mapEntityIntoAdminDTO(productDao.findById(id));
     }
 
     @Override
@@ -132,7 +132,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     @Transactional(readOnly = true)
     public List<ProductAdminDto> findAllForAdminPriceList() {
-        return mapEntitiesIntoAdminDTOs(productDao.findAll(new Sort(Sort.Direction.ASC, "productName")));
+        return mapEntitiesIntoAdminDTOs(productDao.findAll(Sort.by(Sort.Direction.ASC, "productName")));
     }
 
     @Override

@@ -5,7 +5,7 @@ import com.santex.entity.CurrencyRate;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.QueryHints;
 
-import javax.persistence.QueryHint;
+import jakarta.persistence.QueryHint;
 import java.util.Optional;
 
 public interface CurrencyRatesDao extends JpaRepository<CurrencyRate, Integer> {

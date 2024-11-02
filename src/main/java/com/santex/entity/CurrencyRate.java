@@ -3,8 +3,8 @@ package com.santex.entity;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
-import javax.persistence.*;
-import javax.persistence.Entity;
+import jakarta.persistence.*;
+import jakarta.persistence.Entity;
 import java.io.Serializable;
 
 @Entity(name = "currency_rates")

@@ -18,7 +18,7 @@ public interface CustomerService {
 
     void remove( int id);
 
-    Customer findById(int id);
+    Optional<Customer> findById(int id);
 
     CustomerCreateFormDto findFormById(int id);
 

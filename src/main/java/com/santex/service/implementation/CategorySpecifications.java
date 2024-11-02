@@ -5,9 +5,9 @@ import com.santex.dto.SearchCriteriaAdminProduct;
 import com.santex.entity.*;
 import org.springframework.data.jpa.domain.Specification;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.Join;
-import javax.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.Join;
+import jakarta.persistence.criteria.Predicate;
 import java.util.ArrayList;
 import java.util.List;
 

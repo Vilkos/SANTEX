@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 import static com.santex.service.PriceService.total;
 import static com.santex.service.implementation.OrderSpecifications.byOrderAdmin;
@@ -40,14 +41,16 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public void add(Order order) {
-        Customer customer = customerDao.findOne(order.getCustomer().getId());
-        order.setCustomer(customer);
-        orderDao.save(order);
+        Optional<Customer> customer = customerDao.findById(order.getCustomer().getId());
+        if (customer.isPresent()) {
+            order.setCustomer(customer.get());
+            orderDao.save(order);
+        }
     }
 
     @Override
     public void edit(OrderForm o) {
-        Order order = orderDao.findOne(o.getId());
+        Order order = orderDao.findById(o.getId());
         order.setStreet(o.getStreet());
         order.setCity(o.getCity());
         order.setPostcode(o.getPostcode());
@@ -65,14 +68,14 @@ public class OrderServiceImpl implements OrderService {
         }
 
         for (OrderEntryDto entry : entriesFromForm) {
-            orderEntryService.add(orderDao.findOne(o.getId()), entry.getId(), entry.getPriceUAH(), entry.getQuantity());
+            orderEntryService.add(orderDao.findById(o.getId()), entry.getId(), entry.getPriceUAH(), entry.getQuantity());
         }
     }
 
     @Override
     public void remove(int id) {
-        orderEntryDao.deleteInBatch(orderEntryDao.getByOrderId(id));
-        orderDao.delete(id);
+        orderEntryDao.deleteAllInBatch(orderEntryDao.getByOrderId(id));
+        orderDao.deleteById(id);
     }
 
     @Override

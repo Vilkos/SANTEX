@@ -14,9 +14,7 @@ import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import static com.santex.service.PriceService.toDouble;
-import static com.santex.service.PriceService.toInteger;
-import static com.santex.service.PriceService.toStringWithLocale;
+import static com.santex.service.PriceService.*;
 
 @Service
 @Repository
@@ -45,7 +43,7 @@ public class OrderEntryServiceImpl implements OrderEntryService {
     public void add(Order order, int productId, double priceUAH, int quantity) {
         OrderEntry entry = new OrderEntry(
                 order,
-                productDao.findOne(productId),
+                productDao.findById(productId),
                 toInteger(priceUAH),
                 quantity);
         orderEntryDao.save(entry);
@@ -53,7 +51,7 @@ public class OrderEntryServiceImpl implements OrderEntryService {
 
     @Override
     public void remove(int orderId) {
-        orderEntryDao.deleteInBatch(orderEntryDao.getByOrderId(orderId));
+        orderEntryDao.deleteAllInBatch(orderEntryDao.getByOrderId(orderId));
     }
 
     @Override

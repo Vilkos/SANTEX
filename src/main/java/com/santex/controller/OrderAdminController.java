@@ -104,7 +104,7 @@ public class OrderAdminController {
         if (!order.getSKU().isEmpty()) {
             Optional<ProductCustomerDto> product = productService.findBySKU(order.getSKU());
             if (product.isPresent()) {
-                if (order.getEntryList().stream().filter(p -> p.getId() == product.get().getId()).findFirst().isPresent()) {
+                if (order.getEntryList().stream().anyMatch(p -> p.getId() == product.get().getId())) {
                     ProductCustomerDto p = product.get();
                     order.getEntryList().stream().filter(en -> en.getId() == p.getId()).forEach(en -> en.setQuantity(en.getQuantity() + 1));
                     order.setSKU(null);
